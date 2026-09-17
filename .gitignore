@@ -1,4 +1,4 @@
-# STM32CubeIDE / Keil / IAR / GCC build artifacts
+# Build outputs
 Debug/
 Release/
 *.elf
@@ -10,5 +10,7 @@ Release/
 *.su
 *.launch
 .metadata/
+
+# Proteus temp files
 *.pdsprj.*.workspace
 *.pdsprj.*.undo

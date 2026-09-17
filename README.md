@@ -1,159 +1,77 @@
-# Microcontroller - Lab 1: LED Animations
+# HCMUT Microcontroller Lab Portfolio (ĐHBK TP.HCM)
 
-**Ho Chi Minh City University of Technology (HCMUT - BKU)**  
-**Department of Computer Engineering**  
-**Course**: Microcontroller / Vi xử lý  
-**Instructor**: Dr. Le Trong Nhan  
-
----
-
-## 📋 Overview
-This repository contains the source code templates and implementation structure for **Lab 1: LED Animations**, covering all 10 exercises described in the official course lab manual.
-
-- **Target MCU**: `STM32F103C6` (ARM Cortex-M3)
-- **Toolchain**: STM32CubeIDE (v1.7.0+)
-- **Simulation**: Proteus 8.10 SP0 Professional
+**Trường Đại học Bách Khoa - ĐHQG TP.HCM**  
+**Khoa Khoa Học và Kỹ Thuật Máy Tính - Bộ Môn Kỹ Thuật Máy Tính**  
+**Môn học**: Vi điều khiển / Thực tập Vi điều khiển (Microcontroller)  
+**Giảng viên**: TS. Lê Trọng Nhân  
+**Sinh viên thực hiện**: Nguyễn Trọng Nhân ([@NguyenTrongNhan2006](https://github.com/NguyenTrongNhan2006))  
 
 ---
 
-## 📁 Repository Structure
+## 📌 Giới Thiệu Khóa Học
+Kho lưu trữ này chứa toàn bộ tài liệu học tập, mã nguồn C (chuẩn thư viện STM32 HAL), file mô phỏng sơ đồ nguyên lý Proteus và các báo cáo thực hành cho chuỗi 5 bài thí nghiệm (Labs) của môn học **Vi điều khiển**:
+
+| Lab | Tên bài thí nghiệm | Trọng tâm kiến thức | Trạng thái |
+|:---:|---|---|:---:|
+| **[Lab 1](Lab1_LED_Animations/)** | **LED Animations** | GPIO Output, Active LOW, Đèn giao thông, LED 7 đoạn, Đồng hồ 12 LED | **Hoàn thành khung & hướng dẫn** |
+| **[Lab 2](Lab2_Timer_Interrupt/)** | **Timer & Interrupts** | Hardware Timer, Ngắt định thời (UIF), Software Timer non-blocking | Đang tiến hành |
+| **[Lab 3](Lab3_FSM_Traffic_Light/)** | **Finite State Machine & Buttons** | Thiết kế FSM, Chống rung nút bấm (Debounce), Đèn giao thông đa chế độ | Dự kiến |
+| **[Lab 4](Lab4_UART_Communication/)** | **UART Communication & Parser** | Giao thức truyền thông nối tiếp, Ngắt UART RX/TX, Bộ đệm vòng (Ring Buffer) | Dự kiến |
+| **[Lab 5](Lab5_ADC_and_Sensors/)** | **ADC, Sensors & PWM** | Bộ chuyển đổi tương tự-số 12-bit ADC, Cảm biến, Điều chế độ rộng xung PWM | Dự kiến |
+
+---
+
+## 🛠️ Công Cụ Phát Triển & Mô Phỏng
+- **Phần cứng mục tiêu**: Vi điều khiển **STM32F103C6** (ARM Cortex-M3, 72 MHz, 32KB Flash, 10KB SRAM).
+- **Môi trường lập trình (IDE)**: **STM32CubeIDE** (phiên bản khuyến nghị 1.7.0 trở lên).
+- **Môi trường mô phỏng mạch**: **Proteus Professional 8.10 SP0**.
+
+---
+
+## 🌟 Điểm Nhấn Lab 1: LED Animations
+
+Lab 1 bao gồm trọn vẹn 10 bài tập được tổ chức gọn gàng, có đầy đủ hướng dẫn lý thuyết, sơ đồ nối dây Proteus và mã nguồn mẫu chứa `// TODO`:
 
 ```
-Microcontroller_Lab1/
-├── Core/
+Lab1_LED_Animations/
+├── Docs/                                    # Hướng dẫn chi tiết từng bước theo giáo trình
+│   ├── 01_STM32CubeIDE_Setup.md             # Tạo project, cấu hình GPIO, xuất file Hex
+│   ├── 02_Proteus_Simulation.md             # Vẽ mạch, cấp nguồn 3.3V, nối VDDA/VSSA, nạp Hex
+│   └── 03_Report_Guide.md                   # Hướng dẫn nộp Report 1 (Sơ đồ) & Report 2 (Mã nguồn)
+├── Source_Code/                             # Toàn bộ mã nguồn C của 10 bài tập
 │   ├── Inc/
-│   │   ├── main.h             # Master pin definitions and includes
-│   │   ├── exercise1.h        # Exercise 1 header
-│   │   ├── exercise2.h        # Exercise 2 header
-│   │   ├── exercise3.h        # Exercise 3 header
-│   │   ├── exercise4.h        # Exercise 4 header (display7SEG prototype)
-│   │   ├── exercise5.h        # Exercise 5 header
-│   │   ├── exercise6.h        # Exercise 6 header
-│   │   ├── exercise7.h        # Exercise 7 header (clearAllClock prototype)
-│   │   ├── exercise8.h        # Exercise 8 header (setNumberOnClock prototype)
-│   │   ├── exercise9.h        # Exercise 9 header (clearNumberOnClock prototype)
-│   │   └── exercise10.h       # Exercise 10 header
+│   │   ├── main.h                           # Header chính và định nghĩa GPIO
+│   │   └── exercises.h                      # Khai báo nguyên mẫu hàm của 10 bài
 │   └── Src/
-│       ├── main.c             # System initialization and exercise runner
-│       ├── exercise1.c        # Exercise 1 implementation
-│       ├── exercise2.c        # Exercise 2 implementation
-│       ├── exercise3.c        # Exercise 3 implementation
-│       ├── exercise4.c        # Exercise 4 implementation (display7SEG)
-│       ├── exercise5.c        # Exercise 5 implementation
-│       ├── exercise6.c        # Exercise 6 implementation
-│       ├── exercise7.c        # Exercise 7 implementation (clearAllClock)
-│       ├── exercise8.c        # Exercise 8 implementation (setNumberOnClock)
-│       ├── exercise9.c        # Exercise 9 implementation (clearNumberOnClock)
-│       └── exercise10.c       # Exercise 10 implementation
-├── Exercise_1/                # Standalone project files for Exercise 1
-│   └── main.c
-├── Exercise_2/                # Standalone project files for Exercise 2
-│   └── main.c
-├── Exercise_3/                # Standalone project files for Exercise 3
-│   └── main.c
-├── Exercise_4/                # Standalone project files for Exercise 4
-│   └── main.c
-├── Exercise_5/                # Standalone project files for Exercise 5
-│   └── main.c
-├── Exercise_6/                # Standalone project files for Exercise 6
-│   └── main.c
-├── Exercise_7/                # Standalone project files for Exercise 7
-│   └── main.c
-├── Exercise_8/                # Standalone project files for Exercise 8
-│   └── main.c
-├── Exercise_9/                # Standalone project files for Exercise 9
-│   └── main.c
-├── Exercise_10/               # Standalone project files for Exercise 10
-│   └── main.c
-├── Proteus/                   # Proteus simulation schematics and notes
-│   └── README.md
-├── .gitignore
-└── README.md
+│       ├── main.c                           # File main STM32 HAL (chọn gọi exercise để chạy)
+│       ├── exercise1.c .. exercise10.c      # Khung sườn từng bài tập (chứa // TODO)
+├── Proteus/
+│   ├── README.md                            # Hướng dẫn nạp file hex và chạy mô phỏng
+│   └── schematics/                          # Nơi chèn ảnh sơ đồ Proteus cho từng bài tập
+│       ├── ex1_schematic.png                # Ảnh sơ đồ bài 1 (2 LED luân phiên)
+│       ├── ex2_schematic.png                # Ảnh sơ đồ bài 2 (Đèn giao thông đơn)
+│       ├── ex3_schematic.png                # Ảnh sơ đồ bài 3 (Đèn giao thông 4 ngã)
+│       ├── ex4_schematic.png                # Ảnh sơ đồ bài 4 (LED 7 đoạn Anode chung)
+│       ├── ex5_schematic.png                # Ảnh sơ đồ bài 5 (Đèn giao thông + đếm ngược 7-SEG)
+│       ├── ex6_schematic.png                # Ảnh sơ đồ bài 6 (Đồng hồ 12 LED)
+│       └── ex10_schematic.png               # Ảnh sơ đồ bài 10 (Đồng hồ kim hoàn chỉnh)
+└── README.md                                # Tài liệu chi tiết của riêng Lab 1
 ```
 
----
-
-## 🛠️ Summary of Exercises
-
-### Section 4.1 - Exercise 1: 2 LEDs Alternating Blinky
-- **Pins**: PA5 (`LED-RED`), PA6 (`LED-YELLOW`).
-- **Function**: The state of the two LEDs alternates every 2 seconds.
-- **Circuit**: Active LOW (Cathode connected to STM32 pin, Anode connected to +3.3V).
-
-### Section 4.2 - Exercise 2: Traffic Light Simulation
-- **Pins**: PA5 (`LED-RED`), PA6 (`LED-YELLOW`), PA7 (`LED-GREEN`).
-- **Timing**: 
-  - RED: 5 seconds
-  - GREEN: 3 seconds
-  - YELLOW: 2 seconds
-
-### Section 4.3 - Exercise 3: 4-Way Traffic Light
-- **Components**: 12 LEDs arranged to simulate a 4-way intersection (North-South & East-West).
-- **Behavior**: Coordinated traffic light cycles ensuring safe intersections.
-
-### Section 4.4 - Exercise 4: 7-Segment Display (7SEG-COM-ANODE)
-- **Pins**: PB0 to PB6 corresponding to segments `a`, `b`, `c`, `d`, `e`, `f`, `g`.
-- **Logic**: Active LOW (logic 0 turns ON the segment, logic 1 turns OFF).
-- **Required Function**:
-  ```c
-  void display7SEG(int num);
-  ```
-  Displays digits `0` through `9`.
-
-### Section 4.5 - Exercise 5: 4-Way Traffic Light with Countdown
-- **Function**: Re-uses `display7SEG()` to show real-time countdown seconds synchronized with the traffic light signals.
-
-### Section 4.6 - Exercise 6: Analog Clock - 12 LEDs Connection Test
-- **Pins**: PA4 to PA15 representing 12 clock hour positions.
-- **Function**: Turn on each LED in sequence to verify all connections.
-
-### Section 4.7 - Exercise 7: Function clearAllClock()
-- **Required Function**:
-  ```c
-  void clearAllClock(void);
-  ```
-- **Function**: Turns off all 12 clock LEDs simultaneously.
-
-### Section 4.8 - Exercise 8: Function setNumberOnClock()
-- **Required Function**:
-  ```c
-  void setNumberOnClock(int num);
-  ```
-- **Input**: `num` from 0 to 11.
-- **Function**: Turns ON the LED at clock position `num`.
-
-### Section 4.9 - Exercise 9: Function clearNumberOnClock()
-- **Required Function**:
-  ```c
-  void clearNumberOnClock(int num);
-  ```
-- **Input**: `num` from 0 to 11.
-- **Function**: Turns OFF the LED at clock position `num`.
-
-### Section 4.10 - Exercise 10: Analog Clock Full Integration
-- **Function**: Uses the 12 LEDs to display a complete analog clock with Hour, Minute, and Second hands.
-- **Constraint**: At any given time, only **3 LEDs** are turned ON.
+👉 **Đọc hướng dẫn chi tiết toàn bộ Lab 1 tại**: [**Lab1_LED_Animations/README.md**](Lab1_LED_Animations/README.md)
 
 ---
 
-## 🚀 How to Build & Simulate
-
-### 1. STM32CubeIDE
-1. Open **STM32CubeIDE** and import the project or copy the exercise files into your workspace.
-2. Enable Intel Hex output:
-   - Right click Project -> **Properties** -> **C/C++ Build** -> **Settings** -> **MCU Post build outputs**.
-   - Check **Convert to Intel Hex file (-O ihex)**.
-3. Build the project (**Ctrl + B**). The `.hex` file will be generated in the `Debug/` folder.
-
-### 2. Proteus Simulation
-1. Launch **Proteus 8.10 SP0** with Administrator privileges.
-2. Open the schematic in the `Proteus/` folder or create one following the lab manual guide.
-3. Double-click the STM32F103C6 MCU, select the generated `.hex` file in **Program File**.
-4. Press **Run** (F12) to simulate.
-
----
-
-## 👤 Author
-- **Student**: Nguyen Trong Nhan
-- **GitHub**: [@NguyenTrongNhan2006](https://github.com/NguyenTrongNhan2006)
-- **Repository**: [https://github.com/NguyenTrongNhan2006/Microcontroller_Lab1](https://github.com/NguyenTrongNhan2006/Microcontroller_Lab1)
+## 🚀 Cách Bắt Đầu Sử Dụng
+1. **Clone repository về máy**:
+   ```bash
+   git clone https://github.com/NguyenTrongNhan2006/Microcontroller_Lab.git
+   ```
+2. **Mở STM32CubeIDE**:
+   - Mở file `.c` tương ứng trong `Lab1_LED_Animations/Source_Code/Src/`.
+   - Viết phần giải thuật vào các khối `// TODO`.
+   - Bật xuất Intel Hex và nhấn `Ctrl + B` để biên dịch.
+3. **Mô phỏng trên Proteus**:
+   - Mở Proteus với quyền Administrator.
+   - Nạp file `.hex` vào chip STM32F103C6 và nhấn nút Play để quan sát kết quả.
+   - Chụp ảnh sơ đồ lưu đè vào thư mục `Lab1_LED_Animations/Proteus/schematics/`.
