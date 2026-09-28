@@ -1,27 +1,30 @@
-/**
-  ******************************************************************************
-  * @file           : exercise10.c
-  * @brief          : Exercise 10 - Analog Clock Full Integration
-  *                   Use 12 LEDs to display an analog clock (Hour, Minute, Second).
-  *                   Constraint: At a given time, only 3 LEDs are turned ON.
-  ******************************************************************************
-  */
-
 #include "exercises.h"
 
-void exercise10_run(void) {
-    // TODO: Implement clock simulation updating hour, minute, second
-    // Ensure only 3 LEDs are ON simultaneously
-    /*
-    int hour = 0;
-    int minute = 0;
+void exercise10_run(void)
+{
+    int hour = 10;
+    int minute = 58;
     int second = 0;
 
     while (1) {
-        // Update second, minute, hour
-        // Clear all LEDs
-        // Set LED for hour, minute, second
+        /* A 12-position display quantizes the hour hand to the current hour. */
+        int hour_position = hour % 12;
+        int minute_position = minute / 5;
+        int second_position = second / 5;
+
+        /* Hands sharing a position share one LED: 1 to 3 distinct LEDs light. */
+        clearAllClock();
+        setNumberOnClock(hour_position);
+        setNumberOnClock(minute_position);
+        setNumberOnClock(second_position);
         HAL_Delay(1000);
+
+        if (++second >= 60) {
+            second = 0;
+            if (++minute >= 60) {
+                minute = 0;
+                hour = (hour + 1) % 12;
+            }
+        }
     }
-    */
 }

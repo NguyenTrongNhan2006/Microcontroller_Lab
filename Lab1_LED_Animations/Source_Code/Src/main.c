@@ -1,11 +1,3 @@
-/**
-  ******************************************************************************
-  * @file           : main.c
-  * @brief          : Main program body for Lab 1: LED Animations
-  *                   HCMUT - Computer Engineering | Dr. Le Trong Nhan
-  ******************************************************************************
-  */
-
 #include "main.h"
 
 void SystemClock_Config(void);
@@ -13,98 +5,89 @@ static void MX_GPIO_Init(void);
 
 int main(void)
 {
-  HAL_Init();
-  SystemClock_Config();
-  MX_GPIO_Init();
+    HAL_Init();
+    SystemClock_Config();
+    MX_GPIO_Init();
 
-  /* Infinite loop */
-  /* USER CODE BEGIN WHILE */
-  while (1)
-  {
-    /* USER CODE END WHILE */
+#if LAB1_ACTIVE_EXERCISE == 1
+    exercise1_init(); exercise1_run();
+#elif LAB1_ACTIVE_EXERCISE == 2
+    exercise2_init(); exercise2_run();
+#elif LAB1_ACTIVE_EXERCISE == 3
+    exercise3_init(); exercise3_run();
+#elif LAB1_ACTIVE_EXERCISE == 4
+    exercise4_run();
+#elif LAB1_ACTIVE_EXERCISE == 5
+    exercise5_run();
+#elif LAB1_ACTIVE_EXERCISE == 6
+    exercise6_init(); exercise6_run();
+#elif LAB1_ACTIVE_EXERCISE == 7
+    exercise7_run();
+#elif LAB1_ACTIVE_EXERCISE == 8
+    exercise8_run();
+#elif LAB1_ACTIVE_EXERCISE == 9
+    exercise9_run();
+#elif LAB1_ACTIVE_EXERCISE == 10
+    exercise10_run();
+#else
+#error "LAB1_ACTIVE_EXERCISE must be from 1 to 10"
+#endif
 
-    /* Uncomment ONE exercise below to test on Proteus: */
-    // exercise1_run();
-    // exercise2_run();
-    // exercise3_run();
-    // exercise4_run();
-    // exercise5_run();
-    // exercise6_run();
-    // exercise7_run();
-    // exercise8_run();
-    // exercise9_run();
-    // exercise10_run();
-
-    /* USER CODE BEGIN 3 */
-  }
-  /* USER CODE END 3 */
+    while (1) { }
 }
 
 void SystemClock_Config(void)
 {
-  RCC_OscInitTypeDef RCC_OscInitStruct = {0};
-  RCC_ClkInitTypeDef RCC_ClkInitStruct = {0};
+    RCC_OscInitTypeDef osc = {0};
+    RCC_ClkInitTypeDef clk = {0};
 
-  RCC_OscInitStruct.OscillatorType = RCC_OSCILLATORTYPE_HSI;
-  RCC_OscInitStruct.HSIState = RCC_HSI_ON;
-  RCC_OscInitStruct.HSICalibrationValue = RCC_HSICALIBRATION_DEFAULT;
-  RCC_OscInitStruct.PLL.PLLState = RCC_PLL_NONE;
-  if (HAL_RCC_OscConfig(&RCC_OscInitStruct) != HAL_OK)
-  {
-    Error_Handler();
-  }
+    osc.OscillatorType = RCC_OSCILLATORTYPE_HSI;
+    osc.HSIState = RCC_HSI_ON;
+    osc.HSICalibrationValue = RCC_HSICALIBRATION_DEFAULT;
+    osc.PLL.PLLState = RCC_PLL_NONE;
+    if (HAL_RCC_OscConfig(&osc) != HAL_OK) Error_Handler();
 
-  RCC_ClkInitStruct.ClockType = RCC_CLOCKTYPE_HCLK|RCC_CLOCKTYPE_SYSCLK
-                              |RCC_CLOCKTYPE_PCLK1|RCC_CLOCKTYPE_PCLK2;
-  RCC_ClkInitStruct.SYSCLKSource = RCC_SYSCLKSOURCE_HSI;
-  RCC_ClkInitStruct.AHBCLKDivider = RCC_SYSCLK_DIV1;
-  RCC_ClkInitStruct.APB1CLKDivider = RCC_HCLK_DIV1;
-  RCC_ClkInitStruct.APB2CLKDivider = RCC_HCLK_DIV1;
-
-  if (HAL_RCC_ClockConfig(&RCC_ClkInitStruct, FLASH_LATENCY_0) != HAL_OK)
-  {
-    Error_Handler();
-  }
+    clk.ClockType = RCC_CLOCKTYPE_HCLK | RCC_CLOCKTYPE_SYSCLK |
+                    RCC_CLOCKTYPE_PCLK1 | RCC_CLOCKTYPE_PCLK2;
+    clk.SYSCLKSource = RCC_SYSCLKSOURCE_HSI;
+    clk.AHBCLKDivider = RCC_SYSCLK_DIV1;
+    clk.APB1CLKDivider = RCC_HCLK_DIV1;
+    clk.APB2CLKDivider = RCC_HCLK_DIV1;
+    if (HAL_RCC_ClockConfig(&clk, FLASH_LATENCY_0) != HAL_OK) Error_Handler();
 }
 
 static void MX_GPIO_Init(void)
 {
-  GPIO_InitTypeDef GPIO_InitStruct = {0};
+    GPIO_InitTypeDef gpio = {0};
+    const uint16_t clock_pins = GPIO_PIN_4 | GPIO_PIN_5 | GPIO_PIN_6 |
+        GPIO_PIN_7 | GPIO_PIN_8 | GPIO_PIN_9 | GPIO_PIN_10 | GPIO_PIN_11 |
+        GPIO_PIN_12 | GPIO_PIN_13 | GPIO_PIN_14 | GPIO_PIN_15;
+    const uint16_t segment_pins = GPIO_PIN_0 | GPIO_PIN_1 | GPIO_PIN_2 |
+        GPIO_PIN_3 | GPIO_PIN_4 | GPIO_PIN_5 | GPIO_PIN_6;
 
-  /* Enable Clock for GPIOA and GPIOB */
-  __HAL_RCC_GPIOA_CLK_ENABLE();
-  __HAL_RCC_GPIOB_CLK_ENABLE();
+    __HAL_RCC_AFIO_CLK_ENABLE();
+    __HAL_RCC_GPIOA_CLK_ENABLE();
+    __HAL_RCC_GPIOB_CLK_ENABLE();
 
-  /* Output level RESET */
-  HAL_GPIO_WritePin(GPIOA, GPIO_PIN_4|GPIO_PIN_5|GPIO_PIN_6|GPIO_PIN_7
-                          |GPIO_PIN_8|GPIO_PIN_9|GPIO_PIN_10|GPIO_PIN_11
-                          |GPIO_PIN_12|GPIO_PIN_13|GPIO_PIN_14|GPIO_PIN_15, GPIO_PIN_RESET);
+    /* PA13..PA15 are used by the lab, so release all JTAG/SWD pins. */
+    __HAL_AFIO_REMAP_SWJ_DISABLE();
 
-  HAL_GPIO_WritePin(GPIOB, GPIO_PIN_0|GPIO_PIN_1|GPIO_PIN_2|GPIO_PIN_3
-                          |GPIO_PIN_4|GPIO_PIN_5|GPIO_PIN_6, GPIO_PIN_RESET);
+    /* All LEDs and common-anode segments are active LOW: SET means OFF. */
+    HAL_GPIO_WritePin(GPIOA, clock_pins, GPIO_PIN_SET);
+    HAL_GPIO_WritePin(GPIOB, segment_pins, GPIO_PIN_SET);
 
-  /* Configure GPIO pins : PA4 to PA15 (12 LEDs Clock & Traffic) */
-  GPIO_InitStruct.Pin = GPIO_PIN_4|GPIO_PIN_5|GPIO_PIN_6|GPIO_PIN_7
-                          |GPIO_PIN_8|GPIO_PIN_9|GPIO_PIN_10|GPIO_PIN_11
-                          |GPIO_PIN_12|GPIO_PIN_13|GPIO_PIN_14|GPIO_PIN_15;
-  GPIO_InitStruct.Mode = GPIO_MODE_OUTPUT_PP;
-  GPIO_InitStruct.Pull = GPIO_NOPULL;
-  GPIO_InitStruct.Speed = GPIO_SPEED_FREQ_LOW;
-  HAL_GPIO_Init(GPIOA, &GPIO_InitStruct);
+    gpio.Pin = clock_pins;
+    gpio.Mode = GPIO_MODE_OUTPUT_PP;
+    gpio.Pull = GPIO_NOPULL;
+    gpio.Speed = GPIO_SPEED_FREQ_LOW;
+    HAL_GPIO_Init(GPIOA, &gpio);
 
-  /* Configure GPIO pins : PB0 to PB6 (7-Segment Display a..g) */
-  GPIO_InitStruct.Pin = GPIO_PIN_0|GPIO_PIN_1|GPIO_PIN_2|GPIO_PIN_3
-                          |GPIO_PIN_4|GPIO_PIN_5|GPIO_PIN_6;
-  GPIO_InitStruct.Mode = GPIO_MODE_OUTPUT_PP;
-  GPIO_InitStruct.Pull = GPIO_NOPULL;
-  GPIO_InitStruct.Speed = GPIO_SPEED_FREQ_LOW;
-  HAL_GPIO_Init(GPIOB, &GPIO_InitStruct);
+    gpio.Pin = segment_pins;
+    HAL_GPIO_Init(GPIOB, &gpio);
 }
 
 void Error_Handler(void)
 {
-  __disable_irq();
-  while (1)
-  {
-  }
+    __disable_irq();
+    while (1) { }
 }

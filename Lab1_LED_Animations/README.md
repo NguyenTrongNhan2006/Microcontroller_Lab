@@ -1,5 +1,9 @@
 # Lab 1: LED Animations
 
+> Source Exercise 1–10 đã được cài đặt, kèm HEX và kiểm thử tự động.
+> Xem [hướng dẫn build và pin mapping](Source_Code/README.md) và
+> [kết quả kiểm chứng](Source_Code/VERIFICATION.md). Mô phỏng Proteus chưa được xác nhận hoàn tất.
+
 **Trường Đại học Bách Khoa - ĐHQG TP.HCM (HCMUT - BKU)**  
 **Khoa Khoa Học & Kỹ Thuật Máy Tính - Bộ Môn Kỹ Thuật Máy Tính**  
 **Môn học**: Vi điều khiển / Thực tập Vi điều khiển  
@@ -57,7 +61,7 @@ Lab 1 tập trung vào các kiến thức nền tảng trong lập trình nhúng
 
 ## 3. Chi Tiết 10 Bài Tập (Exercises) & Sơ Đồ Nguyên Lý
 
-Mã nguồn của tất cả 10 bài tập được đặt trong thư mục [`Source_Code/Src/`](Source_Code/Src/) với đầy đủ các khối lệnh `// TODO`.
+Mã nguồn của tất cả 10 bài tập được đặt trong thư mục [`Source_Code/Src/`](Source_Code/Src/) với phần cài đặt hoàn chỉnh. Chọn từng bài và build theo [Source_Code/README.md](Source_Code/README.md).
 
 ---
 
@@ -158,7 +162,7 @@ Mã nguồn của tất cả 10 bài tập được đặt trong thư mục [`So
 ### Exercise 10: Tích Hợp Đồng Hồ Kim Hoàn Chỉnh
 - **Mục tiêu**: Tích hợp các hàm đã xây dựng để mô phỏng đồng hồ kim chạy thời gian thực trên 12 LED:
   - Có 3 kim: Kim Giờ, Kim Phút, Kim Giây.
-  - **Ràng buộc khắt khe**: Tại một thời điểm bất kỳ, **chỉ có đúng 3 LED được bật sáng** tương ứng với 3 kim.
+  - Ba kim được ánh xạ lên 12 vị trí. Khi các kim trùng vị trí, chúng dùng chung LED nên có **1–3 LED khác nhau** sáng. Không thể vừa hiển thị đúng vị trí kim vừa luôn có đúng 3 LED riêng biệt.
 - **Mã nguồn**: [`Source_Code/Src/exercise10.c`](Source_Code/Src/exercise10.c)
 - **Sơ đồ mạch Proteus**:
 

@@ -1,12 +1,3 @@
-/**
-  ******************************************************************************
-  * @file           : main.h
-  * @brief          : Header for main.c
-  *                   HCMUT - Microcontroller Lab 1: LED Animations
-  *                   Instructor: Dr. Le Trong Nhan
-  ******************************************************************************
-  */
-
 #ifndef __MAIN_H
 #define __MAIN_H
 
@@ -17,7 +8,6 @@ extern "C" {
 #include "stm32f1xx_hal.h"
 #include "exercises.h"
 
-/* Pin definitions */
 #define LED_RED_Pin            GPIO_PIN_5
 #define LED_RED_GPIO_Port      GPIOA
 #define LED_YELLOW_Pin         GPIO_PIN_6
@@ -31,4 +21,4 @@ void Error_Handler(void);
 }
 #endif
 
-#endif /* __MAIN_H */
+#endif
