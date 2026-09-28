@@ -14,7 +14,7 @@ Kho lưu trữ này chứa toàn bộ tài liệu học tập, mã nguồn C (ch
 | Lab | Tên bài thí nghiệm | Trọng tâm kiến thức | Trạng thái |
 |:---:|---|---|:---:|
 | **[Lab 1](Lab1_LED_Animations/)** | **LED Animations** | GPIO Output, Active LOW, Đèn giao thông, LED 7 đoạn, Đồng hồ 12 LED | **Hoàn thành khung & hướng dẫn** |
-| **[Lab 2](Lab2_Timer_Interrupt/)** | **Timer & Interrupts** | Hardware Timer, Ngắt định thời (UIF), Software Timer non-blocking | Đang tiến hành |
+| **[Lab 2](Lab2_Timer_Interrupt/)** | **Timer & Interrupts** | Hardware Timer, Ngắt định thời (UIF), Software Timer non-blocking | Source 10 bài + HEX; đã kiểm thử logic |
 | **[Lab 3](Lab3_FSM_Traffic_Light/)** | **Finite State Machine & Buttons** | Thiết kế FSM, Chống rung nút bấm (Debounce), Đèn giao thông đa chế độ | Dự kiến |
 | **[Lab 4](Lab4_UART_Communication/)** | **UART Communication & Parser** | Giao thức truyền thông nối tiếp, Ngắt UART RX/TX, Bộ đệm vòng (Ring Buffer) | Dự kiến |
 | **[Lab 5](Lab5_ADC_and_Sensors/)** | **ADC, Sensors & PWM** | Bộ chuyển đổi tương tự-số 12-bit ADC, Cảm biến, Điều chế độ rộng xung PWM | Dự kiến |
